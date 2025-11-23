@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tropica_guide/auth/validators.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,7 +16,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordCtrl = TextEditingController();
   bool loading = false;
 
-  void register() {}
+  Future<void> register() async {
+    if (!_formKey.currentState!.validate()) return;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +31,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
             key: _formKey,
             child: Column(
               children: [
-                TextField(
+                TextFormField(
                   controller: firstNameCtrl,
                   decoration: const InputDecoration(labelText: 'First Name'),
+                  validator: (v) => v!.isEmpty ? 'Required' : null,
                 ),
-                TextField(
+                TextFormField(
                   controller: lastNameCtrl,
                   decoration: const InputDecoration(labelText: 'Last Name'),
+                  validator: (v) => v!.isEmpty ? 'Required' : null,
                 ),
-                TextField(
+                TextFormField(
                   controller: emailCtrl,
                   decoration: const InputDecoration(labelText: 'Email'),
+                  validator: (v) =>
+                      isValidEmail(v ?? '') ? null : 'Invalid email',
                 ),
-                TextField(
+                TextFormField(
                   controller: passwordCtrl,
                   decoration: const InputDecoration(labelText: 'Password'),
                   obscureText: true,
+                  validator: (v) => validatePassword(v ?? ''),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
