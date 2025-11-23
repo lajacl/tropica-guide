@@ -39,6 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ? const CircularProgressIndicator()
                   : const Text('Login'),
             ),
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const RegisterScreen()),
+              ),
+              child: const Text('Create an account'),
+            ),
           ],
         ),
       ),
