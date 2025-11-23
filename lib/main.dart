@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'screens/splash_screen.dart';
 
-main() {
+void main() {
   runApp(const TropicaGuideApp());
 }
 
@@ -13,6 +14,7 @@ class TropicaGuideApp extends StatelessWidget {
       title: 'TropicaGuide',
       theme: ThemeData(primarySwatch: Colors.green),
       debugShowCheckedModeBanner: false,
+      home: const SplashScreen(),
     );
   }
 }
