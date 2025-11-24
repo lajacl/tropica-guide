@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tropica_guide/auth/validators.dart';
+import 'package:tropica_guide/screens/trips_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -18,6 +19,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> register() async {
     if (!_formKey.currentState!.validate()) return;
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const TripsScreen()),
+    );
   }
 
   @override
