@@ -34,6 +34,10 @@ class TripsScreen extends StatelessWidget {
                 ),
               ],
             ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => TripDetail(tripId: '123')),
+            ),
           ),
         ),
       ),
