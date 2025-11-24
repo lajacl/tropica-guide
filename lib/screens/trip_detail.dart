@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tropica_guide/screens/overview_tab.dart';
 
 class TripDetail extends StatelessWidget {
   final String tripId;
@@ -21,7 +22,11 @@ class TripDetail extends StatelessWidget {
           actions: [IconButton(icon: const Icon(Icons.tune), onPressed: null)],
         ),
         body: TabBarView(
-          children: [Text('Overview'), Text('Activities'), Text('Checklist')],
+          children: [
+            OverviewTab(tripId: tripId),
+            Text('Activities'),
+            Text('Checklist'),
+          ],
         ),
       ),
     );
