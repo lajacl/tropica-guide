@@ -45,38 +45,50 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedOpacity(
-              opacity: _opacity,
-              duration: const Duration(seconds: 1),
-              curve: Curves.easeOut,
-              child: Column(
-                children: [
-                  Text(
-                    'TropicaGuide',
-                    style: TextStyle(
-                      color: Colors.lightBlue,
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
+      body: Container(
+        // Ensure the container fills the entire screen
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.green, Colors.blue],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedOpacity(
+                opacity: _opacity,
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeOut,
+                child: Column(
+                  children: [
+                    Text(
+                      'TropicaGuide',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Stress Free Trip Planning",
-                    style: TextStyle(color: Colors.orange, fontSize: 20),
-                  ),
-                ],
+                    SizedBox(height: 20),
+                    Text(
+                      "Stress Free Trip Planning",
+                      style: TextStyle(color: Colors.yellow, fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 50),
-            _imgSwapped
-                ? Image.asset('assets/suitcase_closed.png')
-                : Image.asset('assets/suitcase_open.png'),
-          ],
+              SizedBox(height: 50),
+              _imgSwapped
+                  ? Image.asset('assets/suitcase_closed.png')
+                  : Image.asset('assets/suitcase_open.png'),
+            ],
+          ),
         ),
       ),
     );
