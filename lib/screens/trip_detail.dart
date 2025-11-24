@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tropica_guide/screens/activities_tab.dart';
+import 'package:tropica_guide/screens/checklist_tab.dart';
 import 'package:tropica_guide/screens/overview_tab.dart';
 
 class TripDetail extends StatelessWidget {
@@ -26,7 +27,7 @@ class TripDetail extends StatelessWidget {
           children: [
             OverviewTab(tripId: tripId),
             ActivitiesTab(tripId: tripId),
-            Text('Checklist'),
+            ChecklistTab(tripId: tripId),
           ],
         ),
       ),
