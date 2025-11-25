@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tropica_guide/auth/auth_gate.dart';
 import 'dart:async';
-
-import 'package:tropica_guide/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       Navigator.of(
         context,
-      ).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+      ).pushReplacement(MaterialPageRoute(builder: (context) => AuthGate()));
     });
   }
 
