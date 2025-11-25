@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tropica_guide/screens/register_screen.dart';
 import 'package:tropica_guide/screens/trips_screen.dart';
@@ -19,10 +20,22 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const TripsScreen()),
-    );
+    setState(() => loading = true);
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailCtrl.text.trim(),
+        password: passwordCtrl.text.trim(),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const TripsScreen()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed. Please try again.')),
+      );
+    }
+    setState(() => loading = false);
   }
 
   @override
