@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tropica_guide/screens/activities_tab.dart';
 import 'package:tropica_guide/screens/checklist_tab.dart';
 import 'package:tropica_guide/screens/overview_tab.dart';
+import 'package:tropica_guide/screens/profile_screen.dart';
 
 class TripDetail extends StatelessWidget {
   final String tripId;
@@ -21,7 +22,16 @@ class TripDetail extends StatelessWidget {
               Tab(text: 'Checklist'),
             ],
           ),
-          actions: [IconButton(icon: const Icon(Icons.tune), onPressed: null)],
+          actions: [
+            IconButton(icon: const Icon(Icons.tune), onPressed: null),
+            IconButton(
+              icon: const Icon(Icons.account_circle),
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => const ProfileScreen(),
+              ),
+            ),
+          ],
         ),
         body: TabBarView(
           children: [

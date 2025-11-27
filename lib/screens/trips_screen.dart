@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tropica_guide/screens/profile_screen.dart';
 import 'package:tropica_guide/screens/trip_detail.dart';
 
 class TripsScreen extends StatelessWidget {
@@ -7,7 +8,18 @@ class TripsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('My Trips')),
+      appBar: AppBar(
+        title: const Text('My Trips'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_circle),
+            onPressed: () => showDialog(
+              context: context,
+              builder: (_) => const ProfileScreen(),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         child: const Icon(Icons.add),
