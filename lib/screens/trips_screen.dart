@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:tropica_guide/modals/new_trip_modal.dart';
 import 'package:tropica_guide/screens/profile_screen.dart';
 import 'package:tropica_guide/screens/trip_detail.dart';
 
 class TripsScreen extends StatelessWidget {
   const TripsScreen({super.key});
+
+  String formatDate(DateTime date) {
+    return DateFormat('MMM dd, yyyy').format(date);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,37 +28,38 @@ class TripsScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {
+          showDialog(context: context, builder: (_) => const NewTripModal());
+        },
         child: const Icon(Icons.add),
       ),
-      body: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
-        child: Card(
-          child: ListTile(
-            title: Text('New Year\'s Getaway'),
-            subtitle: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('New York City, New York'),
-                Text('Dec 31, 2025 - Jan 3, 2026'),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Icon(Icons.groups),
-                    SizedBox(width: 10),
-                    Text('Lauren, Taylor, Margo, Kim'),
-                  ],
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('trips').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((doc) {
+              final d = doc.data();
+              return Card(
+                margin: EdgeInsetsGeometry.symmetric(horizontal: 20),
+                child: ListTile(
+                  title: Text(d['title']),
+                  subtitle: Text(
+                    '${d['location'] ?? ''}\n${formatDate((d['startDate'] as Timestamp).toDate())} - ${formatDate((d['endDate'] as Timestamp).toDate())}',
+                  ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => TripDetail(tripId: doc.id),
+                    ),
+                  ),
                 ),
-              ],
-            ),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => TripDetail(tripId: '123')),
-            ),
-          ),
-        ),
+              );
+            }).toList(),
+          );
+        },
       ),
     );
   }
