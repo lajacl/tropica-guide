@@ -54,7 +54,7 @@ class TripDetail extends StatelessWidget {
             ),
             body: TabBarView(
               children: [
-                OverviewTab(tripId: tripId),
+                OverviewTab(tripId: tripId, tripData: tripData),
                 ActivitiesTab(
                   tripId: tripId,
                   startDate: startDate,

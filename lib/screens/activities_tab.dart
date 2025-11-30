@@ -83,7 +83,14 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.add),
-                          onPressed: null,
+                          onPressed: () {
+                            showAddToDayDialog(
+                              context,
+                              activity,
+                              days,
+                              dateFormat,
+                            );
+                          },
                         ),
                       ),
                     );
@@ -91,6 +98,61 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                 );
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showAddToDayDialog(
+    BuildContext context,
+    QueryDocumentSnapshot activity,
+    List<DateTime> days,
+    DateFormat dateFormat,
+  ) {
+    int selectedDayIndex = 0;
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Add to Day'),
+        content: DropdownButtonFormField<int>(
+          value: selectedDayIndex,
+          items: List.generate(days.length, (i) {
+            return DropdownMenuItem(
+              value: i,
+              child: Text('Day ${i + 1} — ${dateFormat.format(days[i])}'),
+            );
+          }),
+          onChanged: (v) => selectedDayIndex = v!,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              await FirebaseFirestore.instance
+                  .collection('trips')
+                  .doc(widget.tripId)
+                  .collection('itinerary_items')
+                  .add({
+                    'type': 'activity',
+                    'name': activity['name'],
+                    'estimatedMinutes': activity['estimatedMinutes'],
+                    'dayIndex': selectedDayIndex,
+                    'addedBy': FirebaseAuth.instance.currentUser!.uid,
+                    'createdAt': FieldValue.serverTimestamp(),
+                  });
+
+              Navigator.pop(context);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Added to itinerary')),
+              );
+            },
+            child: const Text('Add'),
           ),
         ],
       ),
