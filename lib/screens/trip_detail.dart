@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tropica_guide/modals/optimizer_modal.dart';
 import 'package:tropica_guide/screens/activities_tab.dart';
 import 'package:tropica_guide/screens/checklist_tab.dart';
 import 'package:tropica_guide/screens/overview_tab.dart';
@@ -42,7 +43,15 @@ class TripDetail extends StatelessWidget {
                 ],
               ),
               actions: [
-                IconButton(icon: const Icon(Icons.tune), onPressed: null),
+                IconButton(
+                  icon: const Icon(Icons.tune),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => const OptimizerModal(),
+                    );
+                  },
+                ),
                 IconButton(
                   icon: const Icon(Icons.account_circle),
                   onPressed: () => showDialog(
