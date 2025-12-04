@@ -88,7 +88,6 @@ class OverviewTab extends StatelessWidget {
                       ListTile(
                         key: ValueKey(items[i].id),
                         title: Text(items[i]['name']),
-                        // subtitle: Text(items[i]['type']),
                         trailing: const Icon(Icons.drag_handle),
                       ),
                   ],

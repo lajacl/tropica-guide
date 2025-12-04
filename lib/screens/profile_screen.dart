@@ -80,6 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .where('email', isEqualTo: result)
         .get();
 
+    // Alert if user is not found
     if (query.docs.isEmpty) {
       ScaffoldMessenger.of(
         context,
@@ -89,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final companionDoc = query.docs.first;
 
-    // 🚫 Prevent adding self
+    // Prevent adding self
     if (companionDoc.id == user.uid) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('You cannot add yourself as a companion')),
