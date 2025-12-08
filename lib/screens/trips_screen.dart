@@ -43,7 +43,7 @@ class TripsScreen extends StatelessWidget {
             children: snapshot.data!.docs.map((doc) {
               final d = doc.data();
               return Card(
-                margin: EdgeInsetsGeometry.symmetric(horizontal: 20),
+                margin: EdgeInsetsGeometry.all(20),
                 child: ListTile(
                   title: Text(d['title']),
                   subtitle: Text(

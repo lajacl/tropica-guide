@@ -33,7 +33,7 @@ class _ChecklistTabState extends State<ChecklistTab> {
                 onPressed: () async {
                   await FirebaseFirestore.instance
                       .collection('trips/${widget.tripId}/checklist')
-                      .add({'item': itemCtrl.text.trim(), 'checked': ''});
+                      .add({'item': itemCtrl.text.trim(), 'checked': false});
                   itemCtrl.text = '';
                 },
                 label: Text('Add'),
