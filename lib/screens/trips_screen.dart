@@ -8,6 +8,7 @@ import 'package:tropica_guide/screens/trip_detail.dart';
 class TripsScreen extends StatelessWidget {
   const TripsScreen({super.key});
 
+  // Date format helper
   String formatDate(DateTime date) {
     return DateFormat('MMM dd, yyyy').format(date);
   }
@@ -27,12 +28,14 @@ class TripsScreen extends StatelessWidget {
           ),
         ],
       ),
+      // Button to add a new trip
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(context: context, builder: (_) => const NewTripModal());
         },
         child: const Icon(Icons.add),
       ),
+      // Retrieve trips from database
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('trips').snapshots(),
         builder: (context, snapshot) {

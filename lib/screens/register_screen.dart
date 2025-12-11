@@ -19,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordCtrl = TextEditingController();
   bool loading = false;
 
+  // Adds a new user in auth and general database or shows failure message
   Future<void> register() async {
     if (!_formKey.currentState!.validate()) return;
 

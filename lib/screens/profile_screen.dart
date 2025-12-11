@@ -26,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     loadProfile();
   }
 
+  // Set the user details 
   Future<void> loadProfile() async {
     final doc = await userRef.get();
     final data = doc.data() as Map<String, dynamic>;
@@ -36,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() => loading = false);
   }
 
+  // Updates the users info in the database
   Future<void> saveProfile() async {
     setState(() => saving = true);
     await userRef.update({
@@ -49,9 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ).showSnackBar(const SnackBar(content: Text('Profile updated')));
   }
 
+  // Adds a companion if valid
   Future<void> addCompanion() async {
     final emailCtrl = TextEditingController();
 
+    // Prompts the user for an email of another user
     final result = await showDialog<String>(
       context: context,
       builder: (_) => AlertDialog(
@@ -73,8 +77,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
 
+    // Return if no user input
     if (result == null || result.isEmpty) return;
 
+    // Searches db for user with the given email
     final query = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: result)
@@ -103,12 +109,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  // Deletes a travel companion
   Future<void> removeCompanion(String uid) async {
     await userRef.update({
       'companions': FieldValue.arrayRemove([uid]),
     });
   }
 
+  // Logs the current user out and redirects to login screen
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(

@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordCtrl = TextEditingController();
   bool loading = false;
 
+  // Logs a valid user in or shows a failure message
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
 

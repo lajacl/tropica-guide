@@ -23,6 +23,7 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
   final searchCtrl = TextEditingController();
   String query = '';
 
+  // Helper to get list of trips days based on trip start and end date
   List<DateTime> getTripDays(DateTime start, DateTime end) {
     final days = <DateTime>[];
     DateTime current = start;
@@ -53,6 +54,7 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
           ),
           const SizedBox(height: 12),
           Expanded(
+            // get all ativities from database
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('activities')
@@ -62,6 +64,7 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                   return const Center(child: CircularProgressIndicator());
                 }
 
+                // Filter by user search query
                 final results = snapshot.data!.docs.where((doc) {
                   final name = doc['name'].toString().toLowerCase();
                   return name.contains(query);
@@ -71,6 +74,7 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                   return const Center(child: Text('No activities found'));
                 }
 
+                // Displays filtered list
                 return ListView.builder(
                   itemCount: results.length,
                   itemBuilder: (context, index) {

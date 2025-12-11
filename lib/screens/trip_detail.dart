@@ -13,6 +13,7 @@ class TripDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Gets data for a specific trip and displays key details
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('trips')
@@ -30,6 +31,7 @@ class TripDetail extends StatelessWidget {
         final startDate = (tripData['startDate'] as Timestamp).toDate();
         final endDate = (tripData['endDate'] as Timestamp).toDate();
 
+        // Create tabs for the inner trip detail pages
         return DefaultTabController(
           length: 3,
           child: Scaffold(

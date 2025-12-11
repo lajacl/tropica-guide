@@ -43,6 +43,7 @@ class _ChecklistTabState extends State<ChecklistTab> {
           ),
           const SizedBox(height: 12),
           Expanded(
+            // Get the checklist items and their state for a specific trip
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('trips/${widget.tripId}/checklist')
@@ -55,6 +56,7 @@ class _ChecklistTabState extends State<ChecklistTab> {
                       title: Text(d['item']),
                       value: d['checked'],
                       onChanged: (b) async {
+                        // Update the checked status of item in db
                         await FirebaseFirestore.instance
                             .collection('trips/${widget.tripId}/checklist')
                             .doc(d.id)
